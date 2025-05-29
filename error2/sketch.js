@@ -1,6 +1,20 @@
 let errorImg;
 let errors = [];
 const NUM_ERRORS = 7;
+let errorIndex = 0;
+let interval = 200; // 0.4초 간격
+let lastErrorTime = 0;
+let errorTexts = [
+  "시스템 오류 발생",
+  "접근이 거부되었습니다",
+  "파일이 손상되었습니다",
+  "알 수 없는 명령어",
+  "보안 경고!",
+  "메모리 초과",
+  "예상치 못한 에러"
+];
+
+
 
 function preload() {
   errorImg = loadImage('assets/에러-큰거.png');
@@ -8,25 +22,34 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
-  let relW = 0.4; // 에러창 너비 비율 (화면 너비 대비)
-  let relH = relW * (errorImg.height / errorImg.width);
-
-  for (let i = 0; i < NUM_ERRORS; i++) {
-    // 화면 밖으로 나가지 않도록 위치 범위 제한
-    let relX = random(0, 1 - relW);
-    let relY = random(0, 1 - relH);
-
-    errors.push(new ErrorWindow(errorImg, relX, relY, relW));
-  }
+  lastErrorTime = millis();
 }
+
 
 function draw() {
   background(0);
+
+  // 💥 여기에서 에러 창 등장 로직 실행
+  if (errorIndex < NUM_ERRORS && millis() - lastErrorTime > interval) {
+    let relW = 0.4;
+    let relH = relW * (errorImg.height / errorImg.width);
+    let relX = random(0, 1 - relW);
+    let relY = random(0, 1 - relH);
+
+    let msg = errorTexts[errorIndex];  // 해당 에러에 맞는 텍스트
+    errors.push(new ErrorWindow(errorImg, relX, relY, relW, msg));
+
+    errorIndex++;
+    lastErrorTime = millis();
+  }
+
+  // 🎯 에러창 그리기
   for (let e of errors) {
     e.display();
   }
 }
+
+
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);

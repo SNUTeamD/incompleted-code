@@ -14,15 +14,20 @@ function setup() {
 function draw() {
   background(0);
 
-  if (stage === 999) {
-    fill(255);
-    textSize(32);
-    textAlign(CENTER, CENTER);
-    text("에러 발생! 999 스테이지입니다.", width / 2, height / 2);
-  } else {
-    error1.display();  // 수정: errorObj → error1
+  switch (stage) {
+    case 500:
+      fill(255);
+      textSize(32);
+      textAlign(CENTER, CENTER);
+      text("에러 발생! 엔딩B 스테이지입니다.", width / 2, height / 2);
+      break;
+
+    default:
+      error1.display();
+      break;
   }
 }
+
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
@@ -32,7 +37,7 @@ function windowResized() {
 function mouseClicked() {
   // 에러 이미지 클릭 시 999 스테이지로 이동
   if (error1 && error1.isClicked(mouseX, mouseY)) {
-    stage = 999;
+    stage = 500;
     return;
   }
 

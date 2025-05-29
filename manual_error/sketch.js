@@ -13,6 +13,7 @@ let typingSpeed = 120;  // 한 글자당 100ms
 let waitTime = 1200;    // 문장 끝나고 기다리는 시간
 let isWaiting = false;
 let finishText = false;  
+let manualVisible = false;  // 'm' 키 누르면 토글
 
 // 이미지 위치와 크기 변수
 let researcherX, researcherY, researcherW, researcherH;
@@ -28,7 +29,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   textFont(myFont);
-  textSize(35);
+  adjustTextSize();
   textAlign(CENTER, CENTER);
   
   myInput = createInput();
@@ -37,7 +38,7 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  image(imgCompany, (width - bgW) / 2, (height - bgH) / 2, bgW, bgH);
   cursor(ARROW);
   
   switch (stage) {
@@ -59,8 +60,21 @@ function draw() {
         ["매뉴얼을 따르지 않아 발생하는 문제는 회사에서 책임지지 않으므로,", "업무를 수행하며 반드시 매뉴얼을 지켜주시길 바랍니다."]
       ]);
       break;
+
+    case 1: 
+          //연구원
+      image(imgResearcher, researcherX, researcherY, researcherW, researcherH);
+
+      // 화면 아래 회색 박스
+      fill(120);
+      rect(0, height - height / 4, width, height / 4);
+      fill(255,0,0);
+      typeText([
+        ["반드시 매뉴얼을 따라주세요"]
+      ]);
+      break;
   
-    case 1:
+    case 2:
       image(imgResearcher, researcherX, researcherY, researcherW, researcherH);
 
       //매뉴얼
@@ -76,6 +90,12 @@ function draw() {
         ["이제부터 [m]키를 눌러 매뉴얼을 확인할 수 있습니다."],
       ]);
       break;
+  }
+
+
+  // ✅ 언제든지 'm' 키 눌렀을 때 매뉴얼을 위에 띄움
+  if (manualVisible) {
+    image(imgManual, manualX, manualY, manualW, manualH);
   }
 }
 
@@ -149,6 +169,14 @@ function resizeImagesAndPositions() {
   manualW = manualH * (imgManual.width / imgManual.height);
   manualX = width / 2 - manualW / 2;
   manualY = height * 0.1;
+
+  // 회사 배경 이미지
+  bgW = width;
+  bgH = width * (imgCompany.height / imgCompany.width);
+  if (bgH < height) {
+    bgH = height;
+    bgW = height * (imgCompany.width / imgCompany.height);
+  }
 }
 
 function windowResized() {
@@ -160,4 +188,10 @@ function windowResized() {
 function adjustTextSize() {
   let base = min(width, height);
   textSize(base * 0.025); // 비율 기반 글자 크기
+}
+
+function keyPressed() {
+  if (key === 'm' || key === 'M') {
+    manualVisible = !manualVisible;
+  }
 }
