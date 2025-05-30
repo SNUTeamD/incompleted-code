@@ -42,10 +42,8 @@ function draw(){
     case 3: 
       day1Home();
     break;
-
     case 4:
       day1Task1();
-      
     break;
 
   }
@@ -86,7 +84,7 @@ function day1Task1(){
   // 파일: 동물, 식물
   folders.push(new MyFolder(width/3, 200, 100, 60, "동물"));
   folders.push(new MyFolder(2*width/3, 200, 100, 60, "식물"));
-  }
+  
 
   let cols = 4;
   let spacing = 150;
@@ -99,17 +97,20 @@ function day1Task1(){
   }
 
   isStage4Initialized = true; 
-    
+  
+  }
+
   for (let f of folders) {
     f.display();
   }
   for (let d of docs) {
     d.display();
   }
+
   if (!missionEnded) {
     checkMissionStatus();
   } else {
-    fill(0);
+    fill(225);
     textSize(36);
     text(missionSuccess ? "🎉 미션 성공!" : "❌ 미션 실패", width / 2, height / 2);
   }
@@ -149,7 +150,7 @@ function mouseReleased() {
 
     for (let f of folders) {
       if (f.contains(doc)) {
-        doc.inBasket = folders.name;
+        doc.inBasket = f.name;
 
         if (!doc.isCorrect()) {
           missionEnded = true;
@@ -184,4 +185,6 @@ function textBox(textcont, textX, textY){
   textAlign(CENTER, CENTER);
   text(textcont, textX, textY);
 }
+
+
 
