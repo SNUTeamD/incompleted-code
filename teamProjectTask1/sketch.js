@@ -104,7 +104,9 @@ function day1Task1(){
     f.display();
   }
   for (let d of docs) {
-    d.display();
+    if(!d.removed){
+      d.display();
+    }
   }
 
   if (!missionEnded) {
@@ -185,4 +187,6 @@ function textBox(textcont, textX, textY){
   textAlign(CENTER, CENTER);
   text(textcont, textX, textY);
 }
+
+
 
