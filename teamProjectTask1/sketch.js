@@ -1,5 +1,5 @@
 let ButtonX, ButtonY, ButtonW, ButtonH;
-let stage = 3;
+let stage = 102;
 let isStage4Initialized = false;
 let missionEnded = false;
 let missionSuccess = false;
@@ -39,10 +39,10 @@ function draw(){
   background(0);
   cursor(ARROW);
   switch(stage){
-    case 3: 
+    case 102: 
       day1Home();
     break;
-    case 4:
+    case 103:
       day1Task1();
     break;
 
@@ -117,7 +117,7 @@ function day1Task1(){
 }
 
 function mouseClicked(){
-  if (stage===3){
+  if (stage===102){
     if( mouseX >= ButtonX - ButtonW/2 &&
         mouseX <= ButtonX + ButtonW/2 &&
         mouseY >= ButtonY - ButtonH/2 &&
@@ -185,6 +185,4 @@ function textBox(textcont, textX, textY){
   textAlign(CENTER, CENTER);
   text(textcont, textX, textY);
 }
-
-
 
